@@ -18,8 +18,7 @@ startalready=0#遊戲開始沒
 #handler for socket message activities
 async def handler(websocket, path):
     global lockSign, owner,HostName
-    #print(path) #path is not used currently
-    userName='unknown'#可以移到最上面 嗎
+    userName='unknown'
     if websocket not in clients:
         clients.append(websocket) #append new cleint to the array
     async for message in websocket:
@@ -33,7 +32,7 @@ async def handler(websocket, path):
                 await websocket.send('ifconnectTrue###YES')
                 userName=msg[1]
                 print(userName+"已連線")
-                print('startalready=',startalready)
+                #print('startalready=',startalready)
         elif msg[0]=='chkclient':#判斷答題者連線
             if msg[1] in players :#已經有人取該名字了
                 await websocket.send('chkclient###NO')
@@ -41,7 +40,7 @@ async def handler(websocket, path):
                 await websocket.send('chkclient###NO')
             else:#還要判斷有沒有人輸入特殊字元
                 specialnum=await chkspecial(msg[1])
-                print('specialnum=',specialnum)
+                #print('specialnum=',specialnum)
                 if specialnum>0:#有特殊字元
                     await websocket.send('chkclient###Special')
                 else:
@@ -58,7 +57,7 @@ async def handler(websocket, path):
             if len(players)<=0:#代表沒有玩家進入
                 await websocket.send('START###NO')
             else:
-                print('players')
+                #print('players')
                 playerlist=''
                 for i in range(len(players)):
                     playerlist+=players[i]+'**'
@@ -107,8 +106,6 @@ async def handler(websocket, path):
             else:
                 owner='999'
             #if websocket==owner:
-            print(websocket)
-            print(owner)
             if websocket==owner:
                 await websocket.send("UPDATE###"+str(Updatescore))
                 print(str(Updatescore))
@@ -131,7 +128,6 @@ async def chkspecial(msg):
     return specialnum
 async def brocast(msg):
     global startalready
-    #iterate the clients
     startalready=1
     print('startalready=',startalready)
     for websock in clients:
@@ -170,7 +166,7 @@ async def Plusscore(num,owner1):
         print(score)
         print(Updatescore)
         #加3分!
-        score[players.index(owner1)]=score[players.index(owner1)]+3
+        score[players.index(owner1)]=score[players.index(owner1)]+1
         Updatescore=str(score[players.index(owner1)])
         for websock in clients:
             try:

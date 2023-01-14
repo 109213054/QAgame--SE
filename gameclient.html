@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<!-- 
-source: https://gist.github.com/tanmaykm/5111225 
--->
+<!--source: https://gist.github.com/tanmaykm/5111225-->
 <html>
   <head>
 		<title>答題者</title>
@@ -159,24 +157,21 @@ source: https://gist.github.com/tanmaykm/5111225
 			    var el = document.getElementById("game");
 				el.textContent = "目前分數:"+num;
 			}
-			function log_Rank(msg) {//印排名23 45 67 89
-			    // Result###4###3###Papaya###3###Banana###0###Guava###0###Apple
-			    eachplayer=msg.split('###');//len=player+1
-				// 4###3###Papaya###3###Banana###0###Guava###0###Apple
+			function log_Rank(msg) {//印排名
+			    eachplayer=msg.split('###');
+				//建array
 				const m = eachplayer[1];
 				const n = 2;
 				let arr = new Array(m);
 				for (var i = 0; i < m; i++) {
                     arr[i] = new Array(n);
 				}
-				for (var i = 0; i < eachplayer[1]; i ++) {  //行迴圈
+				for (var i = 0; i < eachplayer[1]; i ++) {
 					arr[i][0] = eachplayer[2*(i+1)+1];
 					arr[i][1] = eachplayer[2*(i+1)];
 				}
-				log_msg(arr);
-				
-				
-				for(var i=0;i< m;i++){//做玩家的次數
+				//印內容
+				for(var i=0;i< m;i++){//幾個玩家
 				    var node=document.createElement("p");//新增一個標籤
 					text=arr[i][0]+'得分為 : '+arr[i][1]+'分';
                     var textnode=document.createTextNode(text);//新增標籤內的內容
@@ -193,7 +188,6 @@ source: https://gist.github.com/tanmaykm/5111225
 					/*if(window.location.hostname) {
 						host = "ws://" + window.location.hostname + ":4545/";
 					}*/
-
 					s = new WebSocket(host); //建立socket元件
 					//設定幾個主要事件
 					s.onopen = function (e) { 
@@ -232,12 +226,10 @@ source: https://gist.github.com/tanmaykm/5111225
 						document.getElementById("nickname").style.display = "none";
 					}
 				}else if(x[0]=="START"){
-				    //document.getElementById("game").innerHTML = 0;
 				    log_msg('遊戲開始!出題中...請稍後')
 					document.getElementById("ques").style.display = "none";
 					log_player(0)//更新目前分數
 				}else if(x[0]=="Host"){
-				    //log_msg('題目為 : '+x[1]);
 					document.getElementById("ques").innerHTML = '<p>題目為:'+x[1]+'</p>';
 					document.getElementById("ques").style.display = "block";
 					document.getElementById("answer").style.display = "block";
@@ -260,7 +252,7 @@ source: https://gist.github.com/tanmaykm/5111225
 					document.getElementById("answer").style.display = "block";
 					log_msg(x[1]+'取消搶答!現在重新開放搶答!')
 				}else if(x[0]=='PLUS'){
-				    log_msg(x[1]+'回答正確!加三分!!')
+				    log_msg(x[1]+'回答正確!加1分!!')
 					log_Ans(x[2]);//顯示答案
 					document.getElementById("Anss").style.display = "block";
 				}else if(x[0]=='WrongAns'){
@@ -280,8 +272,6 @@ source: https://gist.github.com/tanmaykm/5111225
 					document.getElementById("ques").style.display = "none";
 					document.getElementById("game").style.display = "none";
 					document.getElementById("messages").style.display = "none";
-				    //log_msg(strs);
-					//strs= Result###4###6###Papya###3###Guava###3###Banana###0###Apple
 					log_Rank(strs);//顯示排名框
 					document.getElementById("RankResult").style.display = "block";
 				}else{
@@ -291,12 +281,10 @@ source: https://gist.github.com/tanmaykm/5111225
 			function request() {
 			    text=("GET###"+nickname)
 				s.send(text);//傳送
-				//text = "";
 			}
 			function release() {
 			    text=("DROP###"+nickname)
 				s.send(text);//傳送
-				//text = "";
 			}
 			function sendans() {//提交答案
 				ans = document.getElementById('ans');//取得欄位值
@@ -318,26 +306,16 @@ source: https://gist.github.com/tanmaykm/5111225
 	</div>
     <div id="game">目前分數:0</div>
 	<br/>
-	
-	
 	<div id="ques"></div>
 	<div id="Anss"></div>
-	
 	<div id="messages"></div> 
-	
 	<form>
 	<div id="answer"><input class="button" type="button" value="搶答" onclick="request()"></div>
-	<div id="Get">
-	<!--GET 搶答 DROP 取消答題-->
-	<!--搶到的可以答題-->
-	答案為:<input type="text" id="ans">
+	<div id="Get">答案為:<input type="text" id="ans">
 	<input class="button" type="reset" value="提交" onclick="sendans()">
 	<input class="button" type="button" value="取消" onclick="release()">
 	</div>
 	</form>
-	
-	
-	
 	<div id="RankResult"><h3>遊戲已結束!<h3><h2>排行榜:</h2></div>
 </body>
 </html>
