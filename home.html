@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>登入介面</title>
+<style>
+    fieldset{
+        margin: 30px auto;
+        background-color: white;
+        width: 800px;
+		height:400px;
+        border: solid #8f8681 5px;
+		text-align:center;
+    }
+    .button {
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 50px;
+        margin: 150px 20px;
+        cursor: pointer;
+        border-radius: 12px;
+    }
+     
+    .button:hover {
+        background-color: #8f8681;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 50px;
+        margin: 150px 20px;
+        cursor: pointer;
+        border-radius: 12px;
+    }
+</style>
+</head>
+<body>
+<fieldset>
+<legend>你問我答</legend>
+<input class="button" type="button" value="我是出題者" onclick="location.href='gamehost.html'">
+<input class="button" type="button" value="我是答題者" onclick="location.href='gameclient.html'">
+</fieldset>
+</body>
+</html>

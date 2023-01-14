@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- 
+source: https://gist.github.com/tanmaykm/5111225 
+-->
+<html>
+  <head>
+		<title>出題者</title>
+		<style>
+		    #connect{
+			    position: absolute;
+			    top: 10%;
+			    left: 50%;
+			    transform: translate(-50%,-50%);
+			}
+		    #startgame{
+			    display: none;
+				position: absolute;
+			    top: 10%;
+			    left: 50%;
+			    transform: translate(-50%,-50%);
+			}
+			#messages {/*提示框*/
+			    display: none;
+				border-radius: 7px;
+				font-size: 24px;
+                width: 500px; 
+				text-align: center;
+		        position: absolute;
+			    top: 20%;
+			    left: 50%;
+			    transform: translate(-50%,-50%);
+			    border: solid #8f8681 5px;
+			}
+			
+
+			#clickbutton{
+			    width: 500px;
+			    border-radius: 7px;
+				font-size: 24px;
+				position: absolute;
+			    top: 80%;
+			    left: 50%;
+			    transform: translate(-50%,-50%);
+				text-align: right;
+				height: 60px;
+			}
+			
+		    #myDiv {/*出題欄*/
+                width: 500px;
+				display: none;
+			    border-radius: 7px;
+				font-size: 24px;
+				position: absolute;
+			    top: 40%;
+			    left: 50%;
+			    transform: translate(-50%,-50%);
+			    border: solid #8f8681 5px;
+				text-align: center;
+				height: 200px;
+            }
+			
+		    input[type=text], select {
+                width: 80%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+			.button {
+				-webkit-transition-duration: 0.4s;
+				transition-duration: 0.4s;
+				padding: 15px 32px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 10px;
+				margin: 4px 2px;
+				cursor: pointer;
+				border-radius: 12px;
+		    }
+			.button:hover {
+				background-color: #8f8681;
+				color: white;
+				padding: 15px 32px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 10px;
+				margin: 4px 2px;
+				cursor: pointer;
+				border-radius: 12px;
+		    }
+		</style>
+                
+		<script>
+            function log_msg(msg) {
+				var p = document.getElementById("messages");
+				p.textContent = msg;
+            }
+            var s; //socket object for connection
+            function doInit() {
+				document.getElementById("messages").style.display = "block";
+                try {// 10.99.1.205
+                    let host = "ws://localhost:4545/"; //設定socker server的ip:port
+					//let host = "ws://localhost:4545/"; //設定socker server的ip:port
+					/*if(window.location.hostname) {
+						host = "ws://" + window.location.hostname + ":4545/";
+					}*/
+
+                    s = new WebSocket(host); //建立socket元件
+					//設定幾個主要事件
+                    s.onopen = function (e) { 
+					    //要先判斷連線成不成功
+						nickname= "出題者";
+						s.send("ifconnectTrue###"+nickname)//server端的暱稱
+                    };
+                    s.onclose = function (e) { log_msg("connection closed."); };
+                    s.onerror = function (e) { log_msg("connection error."); };
+					
+					//當server送訊息來時
+                    s.onmessage = function (e) {
+				    	strs = e.data;
+						x=strs;
+						panduan(x)
+                    };
+                } catch (ex) {
+                    log_msg("connection exception:" + ex);
+                }
+            }
+			function panduan(strs){
+			    x=strs.split('###');
+				if(x[0]=='ifconnectTrue'){
+				    if(x[1]=='YES'){//第一位主持人
+					    document.getElementById("connect").style.display = "none";
+					    document.getElementById("startgame").style.display = "block";
+						log_msg("連線成功!");
+                        nickname= "出題者";//取的表中暱稱
+                        s.send("LOGIN###"+nickname)//server端的暱稱
+					}else{
+					    log_msg('已經有主持人了!');
+					}
+				}else if(x[0]=="START"){
+				    if(x[1]=='NO'){
+					    log_msg('請稍後...尚無玩家進入!');
+					}else{
+					    log_msg('遊戲已開始!')
+						document.getElementById("myDiv").style.display = "block";
+				        document.getElementById("startgame").style.display = "none";
+					}
+				}else if(x[0]=="Host"){
+				    log_msg('題目已傳送!等待答題者搶答!');
+			    }else if(x[0]=="GETALL"){//有人搶到了
+					log_msg(x[1]+'正在答題');
+				}else if(x[0]=='DROP'){
+					log_msg(x[1]+'取消搶答');
+				}else if(x[0]=='PLUS'){
+				    log_msg(x[1]+'回答正確!加三分!!')
+				}else if(x[0]=='WrongAns'){
+				    log_msg(x[1]+'回答錯誤!');
+				}else if(x[0]=="NEXT"){
+				    log_msg('請繼續出題!')
+
+				}else if(x[0]=='Result'){
+				    log_msg('你已結束遊戲!');
+				}else{
+				    log_msg(strs);
+				}
+			}
+            function sendMsg() {
+                ques = document.getElementById('ques');//取得欄位值
+                ans = document.getElementById('ans');
+				if(ques.value==''||ans.value==''){
+				    log_msg('欄位不可留白!');
+				}else{
+				    s.send("Host###"+ques.value+"###"+ans.value);//傳送
+				}
+            }
+            function question() {
+                text=("START")
+                s.send(text);//傳送
+			}
+			function Nextques(){
+			    text=("Clean")
+                s.send(text);//傳送
+			}
+			function Finish(){
+			    text=("Finish")
+                s.send(text);//傳送
+				document.getElementById("myDiv").style.display = "none";
+			}
+		</script>		
+	</head>
+<body>
+	<div id='connect'><button class="button" onclick="doInit()">Connect</button></div>
+	<div id='startgame'><button class="button" onclick="question()" >開始遊戲</button></div>
+	
+	<div id="messages"></div>
+	
+	
+	<div id="myDiv">
+	<form>
+    題目:  <input type="text" id="ques"><br>
+    答案:  <input type="text" id="ans"><br><br>
+	<div id='clickbutton'>
+	<input id="sendq" class="button" type="button" value="提交" onclick="sendMsg()">
+	<input id="next" class="button" type="reset" value="下一題" onclick="Nextques()">
+	<input class="button" type="reset" value="結束遊戲" onclick="Finish()">
+	</div>
+	</form>
+	</div>
+	
+	
+</body>
+</html>
