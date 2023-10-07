@@ -5,72 +5,79 @@
   <head>
 		<title>答題者</title>
 		<style>
+		body{
+		background-color:black;
+		}
 		    #nickname{
 			    border-radius: 7px;
 			    font-size: 24px;
 			    height: 50px;
 			    width: 500px;
 			    text-align: center;
-			    position: absolute;
-			    top: 10%;
-			    left: 50%;
 			    transform: translate(-50%,-50%);
+				position:fixed;
+				padding: 42px 60px;
+				top: 45%;
+			    left: 50%;
 			}
 			#game{/*目前分數*/
 			    display: none;
 			    border-radius: 7px;
-			    font-size: 24px;
-			    border: solid #8f8681 5px;
-			    height: 50px;
-			    width: 500px;
+			    font-size: 28px;
+				background-color:#f27932;
+			    border: solid #f27932 5px;
 			    text-align: center;
-			    position: absolute;
+			    position: fixed;
+				color:white;
+			    top: 10%;
+			    right: 2%;
+			    transform: translate(-50%,-50%);
+			}
+			#messages {
+			    display: none;
+				border-radius: 7px;
+			    font-size: 24px;
+			    background-color:#e8eafa;
+			    border: solid #e8eafa 5px;
+			    text-align: center;
+			    position: fixed;
 			    top: 10%;
 			    left: 50%;
 			    transform: translate(-50%,-50%);
+				height: 60px;
+				width: 500px;
 			}
 			
 		    #ques{
-				height: 60px;
-				width: 500px;
+			    border: solid #ffda55 5px;
+				width:700px;
+				height:200px;
+				padding:12px;
+			    color:white;
 				display: none;
 			    border-radius: 7px;
-			    font-size: 24px;
+			    font-size: 30px;
 			    text-align: center;
-			    position: absolute;
-			    top: 20%;
+			    position: fixed;
+			    top: 35%;
 			    left: 50%;
 			    transform: translate(-50%,-50%);
 			}
 			#Anss{/*答案為*/
-			    height: 60px;
-				width: 500px;
+				padding:12px;
+			    color:white;
 				display: none;
 			    border-radius: 7px;
-			    font-size: 24px;
+			    font-size: 30px;
 			    text-align: center;
-			    position: absolute;
-			    top: 30%;
+			    position: fixed;
+			    top: 70%;
 			    left: 50%;
 			    transform: translate(-50%,-50%);
 			}
 			
 			
-			#messages {
-			    display: none;
-				height: 125px;
-				width: 500px;
-				border-radius: 7px;
-			    font-size: 24px;
-			    border: solid #8f8681 5px;
-			    height: 50px;
-			    width: 500px;
-			    text-align: center;
-			    position: absolute;
-			    top: 40%;
-			    left: 50%;
-			    transform: translate(-50%,-50%);
-			}
+			
 			
 			
 			#answer{/*搶答紐*/
@@ -80,42 +87,51 @@
 			    border-radius: 7px;
 			    font-size: 24px;
 			    text-align: center;
-			    position: absolute;
-			    top: 50%;
+			    position: fixed;
+			    top: 70%;
 			    left: 50%;
 			    transform: translate(-50%,-50%);
 			}
 		    #Get{/*答題框*/
 				height: 80px;
-				width: 500px;
+				width: 700px;
 				display: none;
 			    border-radius: 7px;
 			    font-size: 24px;
 			    text-align: center;
-			    position: absolute;
-			    top: 50%;
+			    position: fixed;
+			    top: 70%;
 			    left: 50%;
 			    transform: translate(-50%,-50%);
 			}
 			
 			#RankResult{
+			    color:white;
 			    display: none;
 				border-radius: 7px;
 			    font-size: 24px;
 			    text-align: center;
 				width: 500px;
-			    position: absolute;
+			    position: fixed;
 			    top: 50%;
 			    left: 50%;
 			    transform: translate(-50%,-50%);
-				border: solid #8f8681 5px;
+				border: solid #ffda55 5px;
 			}
-			h2{color:#11110e}
-			h3{color:#11110e}
-			
+			h2{color:white;}
+			h3{color:white;}
+			::placeholder {
+			    color: grey;
+				}
 		    #user{
 			    padding: 12px 30px;
 			    border-radius: 6px;
+				font-size:30px;
+			}
+			#ans{
+			    padding: 12px 30px;
+			    border-radius: 6px;
+				font-size:30px;
 			}
 			.button {
 				-webkit-transition-duration: 0.4s;
@@ -124,23 +140,44 @@
 				text-align: center;
 				text-decoration: none;
 				display: inline-block;
-				font-size: 10px;
 				margin: 4px 2px;
 				cursor: pointer;
-				border-radius: 12px;
+				border-radius: 35px;
+				color:white;
+				font-size: 30px;
 		    }
 			.button:hover {
-				background-color: #8f8681;
-				color: white;
 				padding: 15px 32px;
 				text-align: center;
 				text-decoration: none;
 				display: inline-block;
-				font-size: 10px;
 				margin: 4px 2px;
 				cursor: pointer;
-				border-radius: 12px;
+				border-radius: 35px;
 		    }
+			.buttonOran{
+			background-color:#f27932; color:white;}
+			.buttonb{
+			font-size: 50px;
+			background-color:#7f87f8;}
+			.buttony{
+			background-color:#ffda55;}
+			.buttong{
+			background-color:#6ac259;}
+			.buttonOran:hover{
+			background-color:#f8e7dd;
+				font-size: 35px;
+				color: #f27932;}
+	        .buttonb:hover{
+			background-color:#e8eafa;
+				color: #7f87f8;}
+			.buttony:hover{
+			background-color:#fafec1;
+				color: #ffda55;}
+			.buttong:hover{
+			font-size: 35px;
+			background-color:#f1ffef;
+				color: #6ac259;}
 		</style>
 		
 		<script>
@@ -194,7 +231,7 @@
 					s.onopen = function (e) { 
 					    nickname= document.getElementById('user').value;
 						if(nickname==''){
-						    log_msg('你沒有填寫暱稱!')
+						    log_msg('你沒有填寫學號!')
 						}else{
 						    s.send("chkclient###"+nickname)//暱稱
 						}
@@ -216,13 +253,13 @@
 			    x=strs.split('###');
 				if (x[0]=='chkclient'){
 				    if(x[1]=='NO'){
-					    log_msg('已經有人取過這個名字了!');
+					    log_msg('已經有人輸入此學號了!');
 					}else if(x[1]=='Special'){
-					    log_msg('名字內不可含有#,*的特殊字元')
+					    log_msg('學號內不可含有#,*的特殊字元')
 					}else if(x[1]=='startalready'){
 					    log_msg("無法連線!遊戲已經開始了");
 					}else{
-					    log_msg("連線成功!等候主持人開啟遊戲!");
+					    log_msg("連線成功!等候老師開啟遊戲!");
 						document.getElementById("game").style.display = "block";
 						document.getElementById("nickname").style.display = "none";
 					}
@@ -231,7 +268,7 @@
 					document.getElementById("ques").style.display = "none";
 					log_player(0)//更新目前分數
 				}else if(x[0]=="Host"){
-					document.getElementById("ques").innerHTML = '<p>題目為:'+x[1]+'</p>';
+					document.getElementById("ques").innerHTML = '<p>'+x[1]+'</p>';
 					document.getElementById("ques").style.display = "block";
 					document.getElementById("answer").style.display = "block";
 					log_msg('現在開放搶答!')
@@ -301,20 +338,20 @@
 <body>
     <div id="nickname">
     <form>
-	輸入暱稱: <input type="text" id="user">
-	<input class="button" type="button" value="Connect" onclick="doInit()">
+    <input placeholder="在此輸入你的學號"  type="text" id="user"><br/><br/>
+	<input class="button buttonb" type="button" value="連線" onclick="doInit()">
     </form>
 	</div>
     <div id="game">目前分數:0</div>
 	<br/>
+	<div id="messages"></div> 
 	<div id="ques"></div>
 	<div id="Anss"></div>
-	<div id="messages"></div> 
 	<form>
-	<div id="answer"><input class="button" type="button" value="搶答" onclick="request()"></div>
-	<div id="Get">答案為:<input type="text" id="ans">
-	<input class="button" type="reset" value="提交" onclick="sendans()">
-	<input class="button" type="button" value="取消" onclick="release()">
+	<div id="answer"><input class="button buttonb" type="button" value="搶答" onclick="request()"></div>
+	<div id="Get"><br><textarea rows="3" class="input"  type="text" id="ans"></textarea><br/>
+	<input class="button buttong" type="button" value="取消" onclick="release()">
+	<input class="button buttonOran" type="reset" value="提交" onclick="sendans()">
 	</div>
 	</form>
 	<div id="RankResult"><h3>遊戲已結束!<h3><h2>排行榜:</h2></div>

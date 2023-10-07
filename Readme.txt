@@ -2,6 +2,7 @@ home.html 為一開始的主頁面
 gameclient.html 為答題者
 gamehost.html 為出題者(即主持人)
 serverH.py 要先開啟才可玩遊戲
+(pip install websockets --user)
 
 裡面的防呆:
 1.只有一位主持人可以連線

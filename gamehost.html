@@ -7,16 +7,17 @@ source: https://gist.github.com/tanmaykm/5111225
   <head>
 		<title>出題者</title>
 		<style>
+		    body{background-color:black;}
 		    #connect{
-			    position: absolute;
-			    top: 10%;
+			    position: fixed;
+			    top: 50%;
 			    left: 50%;
 			    transform: translate(-50%,-50%);
 			}
 		    #startgame{
 			    display: none;
 				position: absolute;
-			    top: 10%;
+			    top: 50%;
 			    left: 50%;
 			    transform: translate(-50%,-50%);
 			}
@@ -26,11 +27,13 @@ source: https://gist.github.com/tanmaykm/5111225
 				font-size: 24px;
                 width: 500px; 
 				text-align: center;
-		        position: absolute;
-			    top: 20%;
+			    background-color:#e8eafa;
+			    border: solid #e8eafa 5px;
+			    position: fixed;
+			    top: 10%;
 			    left: 50%;
 			    transform: translate(-50%,-50%);
-			    border: solid #8f8681 5px;
+				height: 60px;
 			}
 			
 
@@ -47,20 +50,22 @@ source: https://gist.github.com/tanmaykm/5111225
 			}
 			
 		    #myDiv {/*出題欄*/
+			    color:white;
                 width: 500px;
 				display: none;
 			    border-radius: 7px;
 				font-size: 24px;
-				position: absolute;
-			    top: 40%;
+				position: fixed;
+			    top: 50%;
 			    left: 50%;
 			    transform: translate(-50%,-50%);
-			    border: solid #8f8681 5px;
+			    border: solid #f27932 5px;
 				text-align: center;
-				height: 200px;
+				padding:30px;
+				height:400px;
             }
 			
-		    input[type=text], select {
+		    .input[type=text], select {
                 width: 80%;
                 padding: 12px 20px;
                 margin: 8px 0;
@@ -76,23 +81,43 @@ source: https://gist.github.com/tanmaykm/5111225
 				text-align: center;
 				text-decoration: none;
 				display: inline-block;
-				font-size: 10px;
 				margin: 4px 2px;
 				cursor: pointer;
-				border-radius: 12px;
+				border-radius: 35px;
+				color:white;
+				font-size: 30px;
 		    }
 			.button:hover {
-				background-color: #8f8681;
-				color: white;
 				padding: 15px 32px;
 				text-align: center;
 				text-decoration: none;
 				display: inline-block;
-				font-size: 10px;
 				margin: 4px 2px;
 				cursor: pointer;
-				border-radius: 12px;
+				border-radius: 35px;
 		    }
+			.buttonOran{
+			font-size: 50px;
+			background-color:#f27932; color:white;}
+			.buttonb{
+			background-color:#7f87f8;}
+			.buttony{
+			background-color:#ffda55;}
+			.buttong{
+			background-color:#6ac259;}
+			.buttonOran:hover{
+			background-color:#f8e7dd;
+				font-size: 50px;
+				color: #f27932;}
+	        .buttonb:hover{
+			background-color:#e8eafa;
+				color: #7f87f8;}
+			.buttony:hover{
+			background-color:#fafec1;
+				color: #ffda55;}
+			.buttong:hover{
+			background-color:#f1ffef;
+				color: #6ac259;}
 		</style>
                 
 		<script>
@@ -140,18 +165,18 @@ source: https://gist.github.com/tanmaykm/5111225
                         nickname= "出題者";//取的表中暱稱
                         s.send("LOGIN###"+nickname)//server端的暱稱
 					}else{
-					    log_msg('已經有主持人了!');
+					    log_msg('已經有老師登入了!');
 					}
 				}else if(x[0]=="START"){
 				    if(x[1]=='NO'){
-					    log_msg('請稍後...尚無玩家進入!');
+					    log_msg('請稍後...尚無學生連線!');
 					}else{
 					    log_msg('遊戲已開始!')
 						document.getElementById("myDiv").style.display = "block";
 				        document.getElementById("startgame").style.display = "none";
 					}
 				}else if(x[0]=="Host"){
-				    log_msg('題目已傳送!等待答題者搶答!');
+				    log_msg('題目已傳送!等待學生搶答!');
 			    }else if(x[0]=="GETALL"){//有人搶到了
 					log_msg(x[1]+'正在答題');
 				}else if(x[0]=='DROP'){
@@ -194,23 +219,24 @@ source: https://gist.github.com/tanmaykm/5111225
 		</script>		
 	</head>
 <body>
-	<div id='connect'><button class="button" onclick="doInit()">Connect</button></div>
-	<div id='startgame'><button class="button" onclick="question()" >開始遊戲</button></div>
+	<div id='connect'><button class="button buttonOran" onclick="doInit()">連線</button></div>
+	<div id='startgame'><button class="button buttonOran" onclick="question()" >開始遊戲</button></div>
 	
 	<div id="messages"></div>
 	
 	
 	<div id="myDiv">
 	<form>
-    題目:  <input type="text" id="ques"><br>
-    答案:  <input type="text" id="ans"><br><br>
+    <text>請輸入題目<text/><br><textarea rows="5" class="input"  type="text" id="ques"></textarea><br>
+    <text>請輸入答案<text/><br><textarea rows="3" class="input"  type="text" id="ans"></textarea><br><br>
 	<div id='clickbutton'>
-	<input id="sendq" class="button" type="button" value="提交" onclick="sendMsg()">
-	<input id="next" class="button" type="reset" value="下一題" onclick="Nextques()">
-	<input class="button" type="reset" value="結束遊戲" onclick="Finish()">
+	<input id="sendq" class="button buttony" type="button" value="提交" onclick="sendMsg()">
+	<input id="next" class="button buttong" type="reset" value="下一題" onclick="Nextques()">
+	<input class="button buttonb" type="reset" value="結束遊戲" onclick="Finish()">
 	</div>
 	</form>
 	</div>
+	
 	
 	
 </body>
